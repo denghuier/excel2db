@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmh.excel2db.mapper.DataSourceMapper">
+    
+    <resultMap type="DataSourceDO" id="DataSourceResult">
+    	<id     property="id"      column="id"      />
+        <result property="dsName"    column="ds_name"    />
+        <result property="dbType"     column="db_type"     />
+        <result property="host"     column="host"     />
+        <result property="port"   column="port"   />
+        <result property="userName"    column="user_name"    />
+        <result property="password"      column="password"      />
+        <result property="database"    column="database"    />
+        <result property="linkParams"      column="link_params"      />
+
+    </resultMap>
+    
+    <sql id="selectConfigVo">
+        select id, ds_name, host,db_type, port, user_name, password, `database`, link_params
+		from data_source
+
+    </sql>
+
+    <select id="selectById" parameterType="Long" resultMap="DataSourceResult">
+            <include refid="selectConfigVo"/>
+            where id = #{id}
+    </select>
+    <select id="list" parameterType="DataSourceDO" resultMap="DataSourceResult">
+        <include refid="selectConfigVo"/>
+        <where>
+            <if test="id != null  "> and id = #{id}</if>
+            <if test="dsName != null  and dsName != ''"> and ds_name = #{dsName}</if>
+            <if test="host != null  and host != ''"> and host = #{host}</if>
+            <if test="dbType != null  and dbType != ''"> and db_type = #{dbType}</if>
+            <if test="port != null  and port != ''"> and port = #{port}</if>
+            <if test="userName != null  and userName != ''"> and user_name = #{userName}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="database != null  and database != ''"> and `database` = #{database}</if>
+            <if test="linkParams != null  and linkParams != ''"> and link_params = #{linkParams}</if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="DataSourceDO" useGeneratedKeys="true" keyProperty="id">
+        insert into data_source
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="dsName != null">ds_name,</if>
+            <if test="dbType != null">db_type,</if>
+            <if test="host != null">host,</if>
+            <if test="port != null">port,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="password != null">password,</if>
+            <if test="database != null">`database`,</if>
+            <if test="linkParams != null">link_params,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="dsName != null">#{dsName},</if>
+            <if test="dbType != null">#{dbType},</if>
+            <if test="host != null">#{host},</if>
+            <if test="port != null">#{port},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="password != null">#{password},</if>
+            <if test="database != null">#{database},</if>
+            <if test="linkParams != null">#{linkParams},</if>
+        </trim>
+    </insert>
+
+    <update id="update">
+        UPDATE data_source
+        <set>
+            <if test="dsName != null and dsName != ''">ds_name = #{dsName},</if>
+            <if test="dbType != null and dbType != ''">db_type = #{dbType},</if>
+            <if test="host != null and host != ''">host = #{host},</if>
+            <if test="port != null and port != ''">port = #{port},</if>
+            <if test="userName != null and userName != ''">user_name = #{userName},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="database != null and database !='' ">`database` = #{database},</if>
+            <if test="linkParams != null and linkParams !=''">link_params = #{linkParams},</if>
+        </set>
+        where id = #{id}
+	</update>
+
+    
+
+    
+</mapper>

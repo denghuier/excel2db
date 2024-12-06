@@ -1,0 +1,1 @@
+import{s}from"./request-B8tej4z5.js";function r(t){return s({url:"/task/create",method:"post",data:t})}function e(t){return s({url:"/task/start",method:"post",params:t})}function o(t){return s({url:"/task/list",method:"get",params:t})}export{r as c,o as g,e as s};

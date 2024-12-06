@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmh.excel2db.mapper.TaskTransformConfigMapper">
+    
+    <resultMap type="TaskTransformConfig" id="TaskTransformConfigResult">
+    	<id     property="transformId"      column="transform_id"      />
+        <result property="taskId"    column="task_id"    />
+        <result property="sourceColumnNum"     column="source_column_num"     />
+        <result property="sourceColumn"     column="source_column"     />
+        <result property="targetColumn"   column="target_column"   />
+        <result property="transformType"    column="transform_type"    />
+        <result property="configValue"      column="config_value"      />
+
+    </resultMap>
+    
+    <sql id="selectTaskTransformConfigVo">
+        select
+            transform_id,
+            task_id,
+            source_column_num,
+            source_column,
+            target_column,
+            transform_type,
+            config_value
+		from task_transform_config
+    </sql>
+
+
+
+    <select id="selectByTaskId" parameterType="Long" resultMap="TaskTransformConfigResult">
+            <include refid="selectTaskTransformConfigVo"/>
+            where task_id = #{id}
+    </select>
+
+
+    <insert id="insert" parameterType="TaskTransformConfig" useGeneratedKeys="true" keyProperty="transformId">
+        insert into task_transform_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="taskId != null">
+            task_id,
+          </if>
+            <if test="sourceColumnNum != null">
+            source_column_num,
+            </if>
+            <if test="sourceColumn != null">
+            source_column,
+            </if>
+            <if test="targetColumn != null">
+            target_column,
+            </if>
+            <if test="transformType != null">
+            transform_type,
+            </if>
+            <if test="configValue != null">
+            config_value,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">
+            #{taskId},
+            </if>
+            <if test="sourceColumnNum != null">
+            #{sourceColumnNum},
+            </if>
+            <if test="sourceColumn != null">
+            #{sourceColumn},
+            </if>
+            <if test="targetColumn != null">
+            #{targetColumn},
+            </if>
+            <if test="transformType != null">
+            #{transformType},
+            </if>
+            <if test="configValue != null">
+            #{configValue},
+            </if>
+        </trim>
+    </insert>
+
+
+    
+
+    
+</mapper>

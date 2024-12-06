@@ -1,0 +1,42 @@
+# 项目相关配置
+excel2db:
+  # 名称
+  name: hmh
+  # 版本
+  version: 1.0.0
+  # 版权年份
+  copyrightYear: 2024
+
+  filePath: D:/excel2db/uploadPath
+
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8080
+spring:
+  application:
+    name: excel2db
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size: 100MB
+      # 设置总上传的文件大小
+      max-request-size: 200MB
+  datasource:
+    url: jdbc:mysql://localhost:3306/excel2db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
+#logging:
+#  config: classpath:a-logback.xml
+## MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.hmh.**.domain
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  # 加载全局的配置文件
+#  configLocation: classpath:mybatis/mybatis-config.xml

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmh.excel2db.mapper.TaskMapper">
+    
+    <resultMap type="Task" id="TaskResult">
+    	<id     property="taskId"      column="task_id"      />
+        <result property="taskName"    column="task_name"    />
+        <result property="fileName"     column="file_name"     />
+        <result property="sheetName"     column="sheet_name"     />
+        <result property="headerNum"   column="header_num"   />
+        <result property="startRowNum"    column="start_row_num"    />
+        <result property="totalRowNum"      column="total_row_num"      />
+        <result property="removeEndNum"    column="remove_end_num"    />
+        <result property="storePath"      column="store_path"      />
+        <result property="dsId"      column="ds_id"      />
+        <result property="tableName"      column="table_name"      />
+    </resultMap>
+    
+    <sql id="selectTaskVo">
+        select
+            task_id, file_name, sheet_name,header_num, start_row_num, total_row_num,
+            remove_end_num, store_path, ds_id, table_name
+		from task
+
+    </sql>
+
+    <select id="selectById" parameterType="Long" resultMap="TaskResult">
+            <include refid="selectTaskVo"/>
+            where task_id = #{id}
+    </select>
+    <select id="list" parameterType="Task" resultMap="TaskResult">
+        <include refid="selectTaskVo"/>
+        <where>
+            <if test="taskId != null  "> and task_id = #{taskId}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name = #{fileName}</if>
+            <if test="sheetName != null  and sheetName != ''"> and sheet_name = #{sheetName}</if>
+            <if test="headerNum != null  "> and header_num = #{headerNum}</if>
+            <if test="startRowNum != null  "> and start_row_num = #{startRowNum}</if>
+            <if test="totalRowNum != null  "> and total_row_num = #{totalRowNum}</if>
+            <if test="removeEndNum != null  "> and remove_end_num = #{removeEndNum}</if>
+            <if test="storePath != null "> and store_path = #{storePath}</if>
+            <if test="dsId != null  "> and ds_id = #{dsId}</if>
+            <if test="tableName != null  and tableName != ''"> and table_name = #{tableName}</if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="Task" useGeneratedKeys="true" keyProperty="taskId">
+        insert into task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">task_id,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="sheetName != null">sheet_name,</if>
+            <if test="headerNum != null">header_num,</if>
+            <if test="startRowNum != null">start_row_num,</if>
+            <if test="totalRowNum != null">total_row_num,</if>
+            <if test="removeEndNum != null">remove_end_num,</if>
+            <if test="storePath != null">store_path,</if>
+            <if test="dsId != null">ds_id,</if>
+            <if test="tableName != null">table_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="taskId != null">#{taskId},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="sheetName != null">#{sheetName},</if>
+            <if test="headerNum != null">#{headerNum},</if>
+            <if test="startRowNum != null">#{startRowNum},</if>
+            <if test="totalRowNum != null">#{totalRowNum},</if>
+            <if test="removeEndNum != null">#{removeEndNum},</if>
+            <if test="storePath != null">#{storePath},</if>
+            <if test="dsId != null">#{dsId},</if>
+            <if test="tableName != null">#{tableName},</if>
+        </trim>
+    </insert>
+
+
+    
+
+    
+</mapper>

@@ -1,0 +1,36 @@
+{
+  "name": "ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite  --mode development",
+    "build": "vite build ",
+    "preview": "vite preview --open",
+    "b": "vue-cli-service build --dest ../src/main/resources/static"
+
+  },
+  "dependencies": {
+
+    "@element-plus/icons-vue": "^2.3.1",
+    "@ffmpeg/core": "^0.10.0",
+    "@ffmpeg/ffmpeg": "^0.10.1",
+    "@types/node": "^22.7.8",
+    "axios": "^1.7.7",
+    "element-plus": "^2.8.7",
+    "file-saver": "^2.0.5",
+    "jsplumb": "^2.15.6",
+    "path": "^0.12.7",
+    "vue": "^3.4.37",
+
+    "vue-router": "^4.4.5",
+    "vuedraggable": "^2.24.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.2",
+    "sass-embedded": "^1.79.3",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vue-tsc": "^2.0.29"
+  }
+}
