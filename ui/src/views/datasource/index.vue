@@ -4,7 +4,7 @@
       <el-row>
         <el-col :span="24" >
           <el-button type="primary" size="small" @click="add"><el-icon><Plus /></el-icon>添加</el-button>
-          <el-table :data="tableData.value" style="width: 100%">
+          <el-table :data="tableData" style="width: 100%">
             <el-table-column prop="id" label="序号" align="center"  />
             <el-table-column prop="dsName" label="数据源名称"  />
             <el-table-column prop="dbType" label="数据源类型"  />
@@ -43,7 +43,7 @@
       <el-form-item label="类型" :label-width="formLabelWidth">
         <el-select v-model="form.dbType" placeholder="请选择类型">
           <el-option
-              v-for="item in dbTypeOptions.value"
+              v-for="item in dbTypeOptions"
               :key="item"
               :label="item"
               :value="item"
@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive,ref,toRefs  } from 'vue'
+import { reactive,ref  } from 'vue'
 import {ElMessageBox,ElMessage } from "element-plus";
 import { listDatasource, getDatasource,addDatasource, updateDatasource, getDBType } from "@/api/datasource";
 const queryParams = reactive({
@@ -100,7 +100,7 @@ const queryParams = reactive({
 var form = ref({
   id:'',
   dsName: '',
-  dbType: [],
+  dbType: '',
   database: '',
   host: '',
   port: '',
@@ -111,21 +111,22 @@ var form = ref({
 // let form=toRefs(formvalue);
 
 var title=ref('')
-var tableData = reactive([])
-const dbTypeOptions = reactive([])
+var tableData = ref([])
+const dbTypeOptions = ref([])
 const total=ref(0)
 
 const getTypeList = () => {
   getDBType().then(response => {
 
     dbTypeOptions.value=response.data
+
   })
 }
 getTypeList()
 const getList = () => {
   listDatasource(queryParams).then(response => {
 
-    tableData.value=reactive(response.rows)
+    tableData.value=response.rows
     total.value=response.total
   })
 }
@@ -140,7 +141,8 @@ const dialogFormVisible = ref(false)
 const formLabelWidth = 'auto'
 //提交
 const submitForm = () => {
-  if(form.id==''){
+
+  if(form.value.id==null||form.value.id=='' ){
     addDatasource(form.value).then(response => {
       dialogVisible.value = false
       ElMessage.success('添加成功')
@@ -159,16 +161,25 @@ const submitForm = () => {
 
 //添加按钮
 const add = () => {
-  form=reactive({})
+
   dialogVisible.value = true
   title.value='添加数据源'
+  form.value={
+    id:'',
+    dsName: '',
+    dbType: '',
+    database: '',
+    host: '',
+    port: '',
+    userName: '',
+    password: '',
+    linkParams: '',
+  }
 }
 
 const edit = (row) => {
   dialogVisible.value = true
 
-  // form=Object.assign({}, row)
-  // form=JSON.parse(JSON.stringify(row))
   form.value={
     id: row.id,
     dsName: row.dsName,
