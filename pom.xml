@@ -178,6 +178,10 @@
         <finalName>excel2db</finalName>
         <plugins>
             <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.2</version>
@@ -196,6 +200,20 @@
                             <include>*</include>
                         </resource>
                     </resources>
+                </configuration>
+            </plugin>
+            <!--删除前端打包文件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/src/main/resources/static</directory>
+                            <!--默认有些文件是不会被清理的,如果设置成false,则全部按照自定义的来处理-->
+                            <useDefaultExcludes>false</useDefaultExcludes>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
         </plugins>
