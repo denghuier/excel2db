@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { UploadFilled  } from '@element-plus/icons-vue'
-import {  Plus } from '@element-plus/icons-vue'
+import { UploadFilled, Plus  } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
 import { reactive,ref } from 'vue'
-import {getTotalRowNum,getHeaderMap,getTransformType} from "@/api/excel"
+import {getTotalRowNum,getHeaderMap,getTransformType,uploadExcel} from "@/api/excel"
+
   const excelForm = reactive({
     file: '',
     fileName: '',
@@ -19,11 +20,11 @@ import {getTotalRowNum,getHeaderMap,getTransformType} from "@/api/excel"
 
   const worksheetNameList = ref([])
 // 上传文件-成功后回调
-const handleUploadSuccess = (res, file)=> {
-  worksheetNameList.value=res.data.sheetNames
-  excelForm.fileName=res.data.originalFilename
-  excelForm.storePath=res.data.storePath
-}
+// const handleUploadSuccess = (res, file)=> {
+//   worksheetNameList.value=res.data.sheetNames
+//   excelForm.fileName=res.data.originalFilename
+//   excelForm.storePath=res.data.storePath
+// }
 // 获取Excel行数
 const getTotalRow= () => {
   const data={
@@ -76,7 +77,24 @@ const addRow=()=>{
   })
 }
 
+//上传文件
+const uploadSubmit = async (options: any) => {
+  const { file, onSuccess, onError } = options;
 
+  try {
+    const formData = new FormData();
+    formData.append('file', file); // 文件对象
+    const res = await uploadExcel(formData);
+    worksheetNameList.value=res.data.sheetNames
+    excelForm.fileName=res.data.originalFilename
+    excelForm.storePath=res.data.storePath
+
+  } catch (error) {
+    onError(error);
+    console.error('文件上传失败:', error);
+    ElMessage.error('图片上传失败: ' + error.message);
+  }
+};
 
 
 
@@ -98,9 +116,10 @@ const sendData=()=>{
             <el-upload
                 style="width: 100%"
                 drag
-                action="/dev-api/excel/upExcel"
+
                 :on-success="handleUploadSuccess"
-                multiple >
+                :http-request="uploadSubmit"
+                >
               <el-icon class="el-icon--upload"><upload-filled /></el-icon>
               <div class="el-upload__text">
                 拖拽 或者

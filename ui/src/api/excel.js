@@ -33,3 +33,15 @@ export function getTransformType() {
 
     })
 }
+
+export function uploadExcel(data) {
+    return request({
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        url: '/excel/upExcel',
+        method: 'post',
+        data: data
+    })
+
+}
