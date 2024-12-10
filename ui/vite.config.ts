@@ -44,9 +44,9 @@ export default({command, mode}:any)=>{
         "@": path.resolve("./src"), // @代替src
       },
     },
-    // build: {
-    //   outDir: '../src/main/resources/static', // 将 'your-custom-path' 替换为你的目标路径
-    // },
+    build: {
+      outDir: '../src/main/resources/static', // 将 'your-custom-path' 替换为你的目标路径
+    },
     // // vite 配置
     // define: {
     //   'process.env': {}
