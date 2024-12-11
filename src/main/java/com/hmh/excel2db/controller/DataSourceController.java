@@ -20,8 +20,6 @@ public class DataSourceController extends BaseController {
     @Autowired
     IDataSourceService dataSourceService;
 
-
-
     @GetMapping("/all")
     public AjaxResult all(){
         List<DataSourceDO> list =dataSourceService.list(null);
@@ -65,5 +63,17 @@ public class DataSourceController extends BaseController {
     public AjaxResult colList( Long dsId, String tableName) throws Exception {
         return AjaxResult.success(dataSourceService.getColList(dsId, tableName));
     }
+
+    /**
+     * 测试连通性
+     * @param ds
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("connect")
+    public AjaxResult connect(@RequestBody DataSourceDO ds) throws Exception{
+        return dataSourceService.connect(ds);
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.hmh.excel2db.service;
 
+import com.hmh.excel2db.common.core.domain.AjaxResult;
 import com.hmh.excel2db.db.all.domain.ColInfo;
 import com.hmh.excel2db.domain.DataSourceDO;
 
@@ -17,5 +18,7 @@ public interface IDataSourceService {
 
 
     public List<ColInfo> getColList(Long id, String tableName) throws Exception;
+
+    public AjaxResult connect(DataSourceDO ds) throws Exception;
 
 }

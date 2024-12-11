@@ -39,5 +39,6 @@ public interface DataSource {
     /**
      * 字段名称、字段类型、字段备注
      */
+    @Deprecated
     List<String> colList_annotation(String table) throws Exception;
 }

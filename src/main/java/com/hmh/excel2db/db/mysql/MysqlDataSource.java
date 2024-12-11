@@ -41,10 +41,7 @@ public class MysqlDataSource implements DataSource {
     @Override
     public Boolean connection() throws SQLException {
         HikarUtil hikarUtil = new HikarUtil();
-        HikariDataSource hikariDataSource=hikarUtil.dataSource(param);
-        boolean b=hikariDataSource.getConnection().createStatement().execute("select 1");
-        hikariDataSource.close();
-        return b;
+        return hikarUtil.connection(param);
     }
 
     @Override

@@ -29,15 +29,15 @@ public class SqlServerDataSource implements DataSource {
 
     @Override
     public Boolean connection() throws Exception {
-        return null;
+        HikarUtil hikarUtil = new HikarUtil();
+        return hikarUtil.connection(param);
     }
 
     @Override
     public List<String> tableList() throws Exception {
         HikarUtil hikarUtil = new HikarUtil();
         HikariDataSource hikariDataSource=hikarUtil.dataSource(param);
-        List<String> list =hikarUtil.tables(hikariDataSource);
-        return list;
+        return hikarUtil.tables(hikariDataSource);
     }
 
     @Override
@@ -50,7 +50,9 @@ public class SqlServerDataSource implements DataSource {
 
     @Override
     public boolean insert(String sql) {
-
+        HikarUtil hikarUtil = new HikarUtil();
+        HikariDataSource hikariDataSource = hikarUtil.dataSource(param);
+        hikarUtil.insertData(hikariDataSource,sql);
         return true;
     }
 

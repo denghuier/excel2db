@@ -2,6 +2,7 @@ package com.hmh.excel2db.service.impl;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.hmh.excel2db.common.core.domain.AjaxResult;
 import com.hmh.excel2db.db.all.domain.ColInfo;
 import com.hmh.excel2db.db.all.serviceLocator.DBServiceLocator;
 import com.hmh.excel2db.domain.DataSourceDO;
@@ -47,5 +48,15 @@ public class DataSourceServiceImpl implements IDataSourceService {
         JSONObject json = JSONUtil.parseObj(dataSource, false);
         String str= json.toStringPretty();
         return DBServiceLocator.map.get(dataSource.getDbType().toLowerCase()).createSource(str).colList(tableName);
+    }
+
+    @Override
+    public AjaxResult connect(DataSourceDO ds) throws Exception {
+
+
+        JSONObject json = JSONUtil.parseObj(ds, false);
+        String str= json.toStringPretty();
+        Boolean b =DBServiceLocator.map.get(ds.getDbType().toLowerCase()).createSource(str).connection();
+        return b?AjaxResult.success("成功链接"):AjaxResult.error("链接失败");
     }
 }

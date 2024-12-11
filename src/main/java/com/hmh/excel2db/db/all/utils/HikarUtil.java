@@ -93,4 +93,16 @@ public class HikarUtil {
         }
         return list;
     }
+
+    public Boolean connection(JdbcParam baseParams) {
+
+        try {
+            HikariDataSource hikariDataSource=dataSource(baseParams);
+            boolean b =  hikariDataSource.getConnection().createStatement().execute("select 1");
+            hikariDataSource.close();
+            return b;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

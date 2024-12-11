@@ -30,10 +30,7 @@ public class PostgresqlDataSource implements DataSource {
     @Override
     public Boolean connection() throws Exception {
         HikarUtil hikarUtil = new HikarUtil();
-        HikariDataSource hikariDataSource=hikarUtil.dataSource(param);
-        boolean b=hikariDataSource.getConnection().createStatement().execute("select 1");
-        hikariDataSource.close();
-        return b;
+        return hikarUtil.connection(param);
     }
 
     @Override
@@ -48,13 +45,14 @@ public class PostgresqlDataSource implements DataSource {
     public List<ColInfo> colList(String table) throws Exception {
         HikarUtil hikarUtil = new HikarUtil();
         HikariDataSource hikariDataSource=hikarUtil.dataSource(param);
-        List<ColInfo> list =hikarUtil.colList(hikariDataSource, table);
-        return list;
+        return hikarUtil.colList(hikariDataSource, table);
     }
 
     @Override
     public boolean insert(String sql) {
-
+        HikarUtil hikarUtil = new HikarUtil();
+        HikariDataSource hikariDataSource = hikarUtil.dataSource(param);
+        hikarUtil.insertData(hikariDataSource,sql);
         return true;
     }
 

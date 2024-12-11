@@ -48,7 +48,6 @@
               :label="item"
               :value="item"
           />
-
         </el-select>
       </el-form-item>
       <el-form-item label="host" :label-width="formLabelWidth">
@@ -61,7 +60,7 @@
         <el-input v-model="form.userName"  />
       </el-form-item>
       <el-form-item label="密码" :label-width="formLabelWidth">
-        <el-input v-model="form.password"  />
+        <el-input v-model="form.password"  type="password"/>
       </el-form-item>
       <el-form-item label="数据库" :label-width="formLabelWidth">
         <el-input v-model="form.database"  />
@@ -72,6 +71,7 @@
     </el-form>
     <template #footer>
       <div class="dialog-footer">
+        <el-button @click="testConnect">测试</el-button>
         <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button type="primary" @click="submitForm">
           提交
@@ -84,7 +84,7 @@
 <script lang="ts" setup>
 import { reactive,ref  } from 'vue'
 import {ElMessageBox,ElMessage } from "element-plus";
-import { listDatasource, getDatasource,addDatasource, updateDatasource, getDBType } from "@/api/datasource";
+import { listDatasource, connect,addDatasource, updateDatasource, getDBType } from "@/api/datasource";
 const queryParams = reactive({
   pageNum: 1,
   pageSize: 10,
@@ -193,6 +193,13 @@ const edit = (row) => {
   }
 
   title.value='修改数据源'
+}
+// 连通性测试
+const testConnect=()=>{
+  connect(form.value).then(response => {
+    ElMessage.success(response.msg)
+
+})
 }
 const handleClose = (done: () => void) => {
   ElMessageBox.confirm('Are you sure to close this dialog?')

@@ -80,3 +80,11 @@ export function delDatasource(id) {
     method: 'delete'
   })
 }
+// 连通性测试
+export function connect(data) {
+  return request({
+    url: '/datasource/connect',
+    method: 'post',
+    data: data
+  })
+}
